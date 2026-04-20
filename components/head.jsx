@@ -44,9 +44,16 @@ const HeadSection = () => {
 
         {/* CTA BUTTON */}
         <div
-          className="fade-up mt-8 sm:mt-10 flex justify-center"
+          className="fade-up mt-8 sm:mt-10 flex justify-center gap-3 sm:gap-4"
           style={{ animationDelay: "520ms" }}
         >
+          <Button
+            asChild
+            size="lg"
+            className="px-8 sm:px-10 h-11 sm:h-12 rounded-xl shadow-lg bg-white text-slate-900 hover:scale-105 active:scale-95 hover:shadow-xl transition-all duration-300"
+          >
+            <a href="#features">Features</a>
+          </Button>
           <Button
             asChild
             size="lg"
@@ -54,10 +61,11 @@ const HeadSection = () => {
           >
             <Link href="/dashboard">Get Started</Link>
           </Button>
+
         </div>
 
       </div>
-      
+
     </section>
   );
 };

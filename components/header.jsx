@@ -65,14 +65,7 @@ const Header = () => {
         </Link>
 
         {/* NAV LINKS */}
-        {!isSignedIn && (
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-slate-600 dark:text-slate-300 hover:text-green-600 transition">
-              Features
-            </a>
-
-          </div>
-        )}
+        
 
         {/* ACTIONS */}
         <div className="flex items-center gap-3">
