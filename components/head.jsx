@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const HeadSection = () => {
   return (
-    <section className="relative py-20 sm:py-28 px-4 text-center w-full overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center pt-10 pb-8 px-4 text-center w-full overflow-hidden">
 
       {/* BACKGROUND GLOW */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -15,11 +15,11 @@ const HeadSection = () => {
         />
       </div>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto animate-[heroFloat_8s_ease-in-out_infinite]">
 
         {/* TAGLINE BADGE */}
         <div className="fade-up flex justify-center mb-6 px-2" style={{ animationDelay: "0ms" }}>
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium tracking-wide border border-emerald-500/30 bg-emerald-50/60 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-500/20">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium tracking-wide border border-emerald-500/30 bg-emerald-50/60 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-500/20">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Work on your finances today, for a better tomorrow
           </span>
@@ -57,6 +57,7 @@ const HeadSection = () => {
         </div>
 
       </div>
+      
     </section>
   );
 };

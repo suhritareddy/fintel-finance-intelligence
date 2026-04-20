@@ -160,3 +160,7 @@
   animation: fadeUp 0.7s ease forwards;
   animation-fill-mode: forwards;
 }
+html {
+  @apply font-sans;
+  scroll-behavior: smooth;
+}
