@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/header";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       >
         <body
           className="min-h-full flex flex-col 
-                     bg-gradient-to-br 
+                     bg-linear-to-br
                    from-green-50 via-emerald-100 to-green-100
                    dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 
                      transition-all duration-500"

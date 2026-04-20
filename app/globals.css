@@ -128,3 +128,35 @@
     @apply font-sans;
   }
 }
+
+/* ===== HERO ANIMATIONS (FIXED) ===== */
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* IMPORTANT FIX: avoid SSR hydration mismatch */
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.7s ease forwards;
+  animation-fill-mode: forwards;
+}

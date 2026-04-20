@@ -42,13 +42,10 @@ const Header = () => {
         {/* LOGO */}
         <Link href="/">
           <div className="flex items-center gap-3">
-
             <div className="w-10 h-10 rounded-xl flex items-center justify-center
-            bg-gradient-to-r from-green-800 via-green-500 to-emerald-400
-            shadow-lg">
+              bg-linear-to-r from-green-800 via-green-500 to-emerald-400 shadow-lg">
               <Landmark className="w-6 h-6 text-white" />
             </div>
-
             <div>
               <h1 className="text-xl font-bold text-slate-800 dark:text-white">
                 FINTEL
@@ -57,17 +54,16 @@ const Header = () => {
                 Finance Intelligence
               </p>
             </div>
-
           </div>
         </Link>
 
         {/* NAV LINKS */}
         {!isSignedIn && (
           <div className="hidden md:flex items-center gap-8">
-            <a className="text-slate-600 dark:text-slate-300 hover:text-green-600 transition">
+            <a href="#features" className="text-slate-600 dark:text-slate-300 hover:text-green-600 transition">
               Features
             </a>
-            <a className="text-slate-600 dark:text-slate-300 hover:text-green-600 transition">
+            <a href="#testimonials" className="text-slate-600 dark:text-slate-300 hover:text-green-600 transition">
               Testimonials
             </a>
           </div>
@@ -78,45 +74,43 @@ const Header = () => {
 
           {isSignedIn ? (
             <>
-              {/* Dashboard (Topbar style) */}
-              <Link href="/dashboard">
-                <button className="group flex items-center gap-1 px-3 h-10 rounded-xl shadow-md
-                bg-slate-100 dark:bg-slate-800
-                text-slate-700 dark:text-white
-                hover:scale-105 transition-all duration-300">
-
-                  <LayoutDashboard className="w-5 h-5" />
-
-                  <span className="text-xs max-w-0 opacity-0 overflow-hidden
-                  group-hover:max-w-[80px] group-hover:opacity-100
+              {/* DASHBOARD */}
+              <Link
+                href="/dashboard"
+                className="group flex items-center gap-1 px-3 h-10 rounded-xl shadow-md
+                  bg-slate-100 dark:bg-slate-800
+                  text-slate-700 dark:text-white
+                  hover:scale-105 transition-all duration-300"
+              >
+                <LayoutDashboard className="w-5 h-5" />
+                <span className="text-xs max-w-0 opacity-0 overflow-hidden
+                  group-hover:max-w-20 group-hover:opacity-100
                   transition-all duration-300">
-                    Dashboard
-                  </span>
-                </button>
+                  Dashboard
+                </span>
               </Link>
 
-              {/* Add Transaction (GREEN GRADIENT LIKE TOPBAR) */}
-              <Link href="/transaction/create">
-                <button className="group flex items-center gap-1 px-3 h-10 rounded-xl shadow-lg
-                bg-gradient-to-r from-green-700 to-emerald-400 text-white
-                hover:scale-105 transition-all duration-300">
-
-                  <PenBox className="w-5 h-5 group-hover:rotate-12 transition" />
-
-                  <span className="text-xs max-w-0 opacity-0 overflow-hidden
-                  group-hover:max-w-[120px] group-hover:opacity-100
+              {/* ADD TRANSACTION */}
+              <Link
+                href="/transaction/create"
+                className="group flex items-center gap-1 px-3 h-10 rounded-xl shadow-lg
+                  bg-linear-to-r from-green-700 to-emerald-400 text-white
+                  hover:scale-105 transition-all duration-300"
+              >
+                <PenBox className="w-5 h-5 group-hover:rotate-12 transition" />
+                <span className="text-xs max-w-0 opacity-0 overflow-hidden
+                  group-hover:max-w-30 group-hover:opacity-100
                   transition-all duration-300">
-                    Add Transaction
-                  </span>
-                </button>
+                  Add Transaction
+                </span>
               </Link>
 
               {/* THEME TOGGLE */}
               <button
                 onClick={() => setDarkMode((prev) => !prev)}
                 className="p-2.5 rounded-xl
-                text-slate-600 dark:text-slate-300
-                hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  text-slate-600 dark:text-slate-300
+                  hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
                 {darkMode ? (
                   <Sun className="w-5 h-5 text-slate-400" />
@@ -140,8 +134,8 @@ const Header = () => {
               <button
                 onClick={() => setDarkMode((prev) => !prev)}
                 className="p-2.5 rounded-xl
-                text-slate-600 dark:text-slate-300
-                hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  text-slate-600 dark:text-slate-300
+                  hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
                 {darkMode ? (
                   <Sun className="w-5 h-5 text-yellow-400" />
@@ -150,11 +144,11 @@ const Header = () => {
                 )}
               </button>
 
-              {/* LOGIN (NOW MATCHED STYLE) */}
+              {/* LOGIN */}
               <SignInButton forceRedirectUrl="/dashboard">
                 <button className="px-4 h-10 rounded-xl shadow-md
-                bg-gradient-to-r from-green-700 to-emerald-400 text-white
-                hover:scale-105 transition-all duration-300">
+                  bg-linear-to-r from-green-700 to-emerald-400 text-white
+                  hover:scale-105 transition-all duration-300">
                   Login
                 </button>
               </SignInButton>
