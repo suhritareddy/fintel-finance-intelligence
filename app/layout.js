@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/header";
+import { checkUser } from "@/lib/checkUser";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -18,7 +19,8 @@ export const metadata = {
   description: "Work on Finances today, for better tomorrow",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  await checkUser();
   return (
     <ClerkProvider>
       <html
