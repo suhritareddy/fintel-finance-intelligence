@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/header";
 import { checkUser } from "@/lib/checkUser";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -36,7 +37,7 @@ export default async function RootLayout({ children }) {
         >
           <Header />
           <main className="flex-1 pt-20">{children}</main>
-
+          <Toaster richColors/>
           <footer
             className="mt-auto border-t 
                     bg-white/60 dark:bg-slate-900/60 
