@@ -1,0 +1,142 @@
+export const defaultCategories = [
+  // Income Categories
+  {
+    id: "salary",
+    name: "Salary",
+    type: "INCOME",
+    icon: "Wallet",
+  },
+  {
+    id: "freelance",
+    name: "Freelance",
+    type: "INCOME",
+    icon: "Laptop",
+  },
+  {
+    id: "investments",
+    name: "Investments",
+    type: "INCOME",
+    icon: "TrendingUp",
+  },
+  {
+    id: "business",
+    name: "Business",
+    type: "INCOME",
+    icon: "Building",
+  },
+  {
+    id: "rental",
+    name: "Rental",
+    type: "INCOME",
+    icon: "Home",
+  },
+  {
+    id: "other-income",
+    name: "Other Income",
+    type: "INCOME",
+    icon: "Plus",
+  },
+
+  // Expense Categories
+  {
+    id: "housing",
+    name: "Housing",
+    type: "EXPENSE",
+    icon: "Home",
+    subcategories: ["Rent", "Mortgage", "Property Tax", "Maintenance"],
+  },
+  {
+    id: "transportation",
+    name: "Transportation",
+    type: "EXPENSE",
+    icon: "Car",
+    subcategories: ["Fuel", "Public Transport", "Maintenance", "Parking"],
+  },
+  {
+    id: "groceries",
+    name: "Groceries",
+    type: "EXPENSE",
+    icon: "Shopping",
+  },
+  {
+    id: "utilities",
+    name: "Utilities",
+    type: "EXPENSE",
+    icon: "Zap",
+    subcategories: ["Electricity", "Water", "Gas", "Internet", "Phone"],
+  },
+  {
+    id: "entertainment",
+    name: "Entertainment",
+    type: "EXPENSE",
+    icon: "Film",
+    subcategories: ["Movies", "Games", "Streaming Services"],
+  },
+  {
+    id: "food",
+    name: "Food",
+    type: "EXPENSE",
+    icon: "UtensilsCrossed",
+  },
+  {
+    id: "shopping",
+    name: "Shopping",
+    type: "EXPENSE",
+    icon: "ShoppingBag",
+    subcategories: ["Clothing", "Electronics", "Home Goods"],
+  },
+  {
+    id: "healthcare",
+    name: "Healthcare",
+    type: "EXPENSE",
+    icon: "HeartPulse",
+    subcategories: ["Medical", "Dental", "Pharmacy", "Insurance"],
+  },
+  {
+    id: "education",
+    name: "Education",
+    type: "EXPENSE",
+    icon: "GraduationCap",
+    subcategories: ["Tuition", "Books", "Courses"],
+  },
+  {
+    id: "personal",
+    name: "Personal Care",
+    type: "EXPENSE",
+    icon: "Smile",
+    subcategories: ["Haircut", "Gym", "Beauty"],
+  },
+  {
+    id: "travel",
+    name: "Travel",
+    type: "EXPENSE",
+    icon: "Plane",
+  },
+  {
+    id: "insurance",
+    name: "Insurance",
+    type: "EXPENSE",
+    icon: "Shield",
+    subcategories: ["Life", "Home", "Vehicle"],
+  },
+  {
+    id: "gifts",
+    name: "Gifts & Donations",
+    type: "EXPENSE",
+    icon: "Gift",
+  },
+  {
+    id: "bills",
+    name: "Bills & Fees",
+    type: "EXPENSE",
+    icon: "Receipt",
+    subcategories: ["Bank Fees", "Late Fees", "Service Charges"],
+  },
+  {
+    id: "other-expense",
+    name: "Other Expenses",
+    type: "EXPENSE",
+    icon: "MoreHorizontal",
+  },
+];
+
