@@ -41,13 +41,18 @@ const Header = () => {
 
         {/* LOGO */}
         <Link
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            window.history.pushState(null, "", "/");
-          }}
-        >
+  href="/"
+   className="flex items-center gap-3"
+  onClick={(e) => {
+    if (pathname === "/") {
+      e.preventDefault(); 
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  }}
+>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center
               bg-linear-to-r from-green-800 via-green-500 to-emerald-400 shadow-lg">

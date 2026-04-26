@@ -7,38 +7,41 @@ import Link from "next/link";
 import useFetch from '@/hooks/use-fetch';
 import { updateDefaultAccount } from '@/actions/accounts';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const AccountCard = ({ account }) => {
   const { name, type, balance, id, isDefault } = account;
-  const{
+  const router = useRouter();
+  
+  const {
     loading: updateDefaultLoading,
-    fn:updatedefaultFn,
-    data:updatedAccount,
+    fn: updatedefaultFn,
+    data: updatedAccount,
     error,
-  }=useFetch(updateDefaultAccount);
-  const handleDefaultChange=async(event)=>{
+  } = useFetch(updateDefaultAccount);
+
+  const handleDefaultChange = async (event) => {
     event.preventDefault();
-    if(isDefault){
+    if (isDefault) {
       toast.warning("You need atleast 1 default account");
       return;
     }
     await updatedefaultFn(id);
-
   };
-  useEffect(()=>{
-    if(updatedAccount?.success){
+
+  useEffect(() => {
+    if (updatedAccount?.success) {
       toast.success("Default account updated successfully");
+      router.refresh();
     }
-  },[updatedAccount,updateDefaultLoading])
+  }, [updatedAccount, updateDefaultLoading]);
 
-  useEffect(()=>{
-    if(updatedAccount?.error){
-      toast.error(error.message|| "Failed to update default account");
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message || "Failed to update default account");
     }
-  },[updatedAccount,updateDefaultLoading])
+  }, [error]);
 
-
-  
   return (
     <Card
       className="group relative overflow-hidden
@@ -49,16 +52,12 @@ const AccountCard = ({ account }) => {
       dark:hover:shadow-slate-900/40
       transition-all duration-300 hover:-translate-y-1"
     >
-
-      {/* TOP SECTION */}
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-
         <Link href={`/account/${id}`} className="flex-1">
           <CardTitle className="text-sm font-medium capitalize text-slate-800 dark:text-white">
             {name}
           </CardTitle>
         </Link>
-
         <Switch
           checked={isDefault}
           onClick={handleDefaultChange}
@@ -67,7 +66,6 @@ const AccountCard = ({ account }) => {
         />
       </CardHeader>
 
-      {/* CLICKABLE BODY */}
       <Link href={`/account/${id}`}>
         <CardContent>
           <div className="text-2xl font-bold text-slate-900 dark:text-white">
@@ -76,7 +74,6 @@ const AccountCard = ({ account }) => {
               maximumFractionDigits: 2,
             }).format(balance)}
           </div>
-
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 pb-2">
             {type.charAt(0) + type.slice(1).toLowerCase()} Account
           </p>
@@ -87,7 +84,6 @@ const AccountCard = ({ account }) => {
             <ArrowUpRight className="mr-1 h-4 w-4" />
             Income
           </div>
-
           <div className="flex items-center group-hover:text-red-500 transition-colors">
             <ArrowDownRight className="mr-1 h-4 w-4" />
             Expense
@@ -95,10 +91,9 @@ const AccountCard = ({ account }) => {
         </CardFooter>
       </Link>
 
-      {/* SUBTLE HOVER GLOW */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-        bg-linear-to-br from-emerald-200/20 to-transparent
+        bg-gradient-to-br from-emerald-200/20 to-transparent
         dark:from-slate-700/30 pointer-events-none rounded-xl"
       />
     </Card>

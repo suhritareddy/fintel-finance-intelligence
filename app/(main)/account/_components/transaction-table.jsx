@@ -63,6 +63,7 @@ const RECURRING_INTERVALS = {
   YEARLY: "Yearly",
 };
 
+
 export default function TransactionTable({ transactions }) {
   const [selectedIds, setSelectedIds] = useState([]);
   const [sortConfig, setSortConfig] = useState({
@@ -74,6 +75,7 @@ export default function TransactionTable({ transactions }) {
   const [recurringFilter, setRecurringFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
+
 
   const filteredAndSortedTransactions = useMemo(() => {
     let result = [...transactions];
@@ -168,12 +170,14 @@ export default function TransactionTable({ transactions }) {
       )
     )
       return;
-    deleteFn(selectedIds);
+
+    await deleteFn(selectedIds);
   };
 
   useEffect(() => {
     if (deleted && !deleteLoading) {
       toast.success("Transactions deleted successfully");
+       setSelectedIds([]);
     }
   }, [deleted, deleteLoading]);
 
@@ -246,7 +250,7 @@ export default function TransactionTable({ transactions }) {
           {selectedIds.length > 0 && (
             <Button variant="destructive" size="sm" onClick={handleBulkDelete}>
               <Trash className="h-4 w-4 mr-2" />
-              Delete ({selectedIds.length})
+              Delete Selected ({selectedIds.length})
             </Button>
           )}
 

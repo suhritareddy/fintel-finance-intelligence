@@ -3,8 +3,11 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+ 
 const HeadSection = () => {
+
   return (
+   
     <section className="relative min-h-[90vh] flex items-center justify-center pt-10 pb-8 px-4 text-center w-full overflow-hidden">
 
       {/* BACKGROUND GLOW */}
@@ -50,7 +53,13 @@ const HeadSection = () => {
           <Button
             asChild
             size="lg"
-            className="px-8 sm:px-10 h-11 sm:h-12 rounded-xl shadow-lg bg-white text-slate-900 hover:scale-105 active:scale-95 hover:shadow-xl transition-all duration-300"
+            className="px-8 sm:px-10 h-11 sm:h-12 rounded-xl shadow-lg 
+                    bg-white text-slate-900 
+                    hover:bg-slate-900 hover:text-white 
+                    dark:bg-slate-200 dark:text-slate-900 
+                    dark:hover:bg-white dark:hover:text-slate-900
+                      hover:scale-105 active:scale-95 
+                      hover:shadow-xl transition-all duration-300"
           >
             <a href="#features">Features</a>
           </Button>

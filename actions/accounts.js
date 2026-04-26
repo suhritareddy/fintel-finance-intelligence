@@ -44,32 +44,31 @@ export async function updateDefaultAccount(accountId) {
   }
 }
 
-export async function getAccountWithTransaction(accountId){
-    const { userId } = await auth();
-    if (!userId) throw new Error("Unauthorized");
+export async function getAccountWithTransaction(accountId) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
 
-    const user = await db.user.findUnique({
-      where: { clerkUserId: userId },
-    });
-    if (!user) throw new Error("User not found");
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+  if (!user) throw new Error("User not found");
 
-    const account = await db.account.findUnique({
-        where:{id:accountId,userId:user.id},
-        include:{
-            transactions:{
-                orderBy:{date:"desc"},
-            },
-            _count:{
-                select:{transactions:true},
-            }
-        }
-    });
-    if(!account)return null;
-    return{
-        ...serializeTransaction(account),
-        transactions:account.transactions.map(serializeTransaction),
-    }
-
+  const account = await db.account.findUnique({
+    where: { id: accountId, userId: user.id },
+    include: {
+      transactions: {
+        orderBy: { date: "desc" },
+      },
+      _count: {
+        select: { transactions: true },
+      },
+    },
+  });
+  if (!account) return null;
+  return {
+    ...serializeTransaction(account),
+    transactions: account.transactions.map(serializeTransaction),
+  };
 }
 
 export async function bulkDeleteTransactions(transactionIds) {
@@ -90,12 +89,11 @@ export async function bulkDeleteTransactions(transactionIds) {
       },
     });
 
-    
     const accountBalanceChanges = transactions.reduce((acc, transaction) => {
       const change =
         transaction.type === "EXPENSE"
-          ? transaction.amount
-          : -transaction.amount;
+          ? transaction.amount.toNumber()
+          : -transaction.amount.toNumber();
       acc[transaction.accountId] = (acc[transaction.accountId] || 0) + change;
       return acc;
     }, {});
@@ -112,7 +110,7 @@ export async function bulkDeleteTransactions(transactionIds) {
 
       // Update account balances
       for (const [accountId, balanceChange] of Object.entries(
-        accountBalanceChanges
+        accountBalanceChanges,
       )) {
         await tx.account.update({
           where: { id: accountId },
@@ -127,7 +125,6 @@ export async function bulkDeleteTransactions(transactionIds) {
 
     revalidatePath("/dashboard");
     revalidatePath("/account/[id]");
-
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };

@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import React, { Suspense } from "react";
 import TransactionTable from "../_components/transaction-table";
 import { BarLoader } from "react-spinners";
+import { AccountChart } from "../_components/account-chart";
 
 
 const AccountPage = async ({ params }) => {
@@ -19,7 +20,7 @@ const AccountPage = async ({ params }) => {
   const { name, type, balance, _count } = account;
 
   return (
-    <div className="px-5 max-w-7xl mx-auto mt-8 space-y-6">
+    <div className="px-5 max-w-7xl mx-auto  space-y-6">
 
       {/* HEADER */}
       <div>
@@ -80,17 +81,22 @@ const AccountPage = async ({ params }) => {
         />
       </Card>
       {/* Chart */}
+        <Suspense fallback={<BarLoader color="#10B981" className="mt-4 w-full" />}>
+        <div>
+          <AccountChart transactions={transactions}/>
+        </div>
+          
+        </Suspense>
 
       {/* Transaction table */}
       <Suspense fallback={<BarLoader color="#10B981" className="mt-4 w-full" />}>
         <div className="
-  rounded-2xl
-  bg-emerald-50/80 dark:bg-slate-800/60
-  backdrop-blur-xl
-  border border-emerald-200/40 dark:border-slate-700/50
-  shadow-md 
-  p-6 md:p-9
-">
+         rounded-2xl
+        bg-emerald-50/80 dark:bg-slate-800/60
+        backdrop-blur-xl
+        border border-emerald-200/40 dark:border-slate-700/50
+        shadow-md 
+        p-6 md:p-9">
           <TransactionTable transactions={transactions} />
         </div>
 

@@ -26,9 +26,10 @@ export default async function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      >
+  lang="en"
+  data-scroll-behavior="smooth"
+  className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+>
         <body
           className="
             min-h-screen flex flex-col
@@ -40,10 +41,10 @@ export default async function RootLayout({ children }) {
           "
         >
           {/* Header */}
-          <Header />
+          <Header/>
 
           {/* Main Content */}
-          <main className="flex-1 pt-20">
+          <main className="flex-1 pt-12">
             {children}
           </main>
 
