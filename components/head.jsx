@@ -8,7 +8,7 @@ const HeadSection = () => {
 
   return (
    
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-10 pb-8 px-4 text-center w-full overflow-hidden">
+    <section className="relative min-h-[95vh] flex items-center justify-center pt-10 pb-8 px-4 text-center w-full overflow-hidden">
 
       {/* BACKGROUND GLOW */}
       <div className="absolute inset-0 -z-10 pointer-events-none">

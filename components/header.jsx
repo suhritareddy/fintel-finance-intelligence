@@ -4,8 +4,10 @@ import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
 import { LayoutDashboard, PenBox, Sun, Moon, Landmark } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
   const { isSignedIn, isLoaded } = useUser();
   const [darkMode, setDarkMode] = useState(false);
 
@@ -41,18 +43,15 @@ const Header = () => {
 
         {/* LOGO */}
         <Link
-  href="/"
-   className="flex items-center gap-3"
-  onClick={(e) => {
-    if (pathname === "/") {
-      e.preventDefault(); 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  }}
->
+          href="/"
+          className="flex items-center gap-3"
+          onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+        >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center
               bg-linear-to-r from-green-800 via-green-500 to-emerald-400 shadow-lg">
@@ -68,9 +67,6 @@ const Header = () => {
             </div>
           </div>
         </Link>
-
-        {/* NAV LINKS */}
-        
 
         {/* ACTIONS */}
         <div className="flex items-center gap-3">

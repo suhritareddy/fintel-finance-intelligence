@@ -91,11 +91,7 @@ const AccountCard = ({ account }) => {
         </CardFooter>
       </Link>
 
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-        bg-gradient-to-br from-emerald-200/20 to-transparent
-        dark:from-slate-700/30 pointer-events-none rounded-xl"
-      />
+     <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-emerald-200/20 to-transparent dark:from-slate-700/30" />
     </Card>
   );
 };

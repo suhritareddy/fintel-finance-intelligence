@@ -77,7 +77,7 @@ const CreateAccountDrawer = ({ children }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       
-      {/* ✅ FIX: use button with asChild */}
+      
       <DrawerTrigger asChild>
         <button className="w-full text-left">
           {children}

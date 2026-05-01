@@ -178,6 +178,7 @@ export default function TransactionTable({ transactions }) {
     if (deleted && !deleteLoading) {
       toast.success("Transactions deleted successfully");
        setSelectedIds([]);
+        router.refresh();
     }
   }, [deleted, deleteLoading]);
 
