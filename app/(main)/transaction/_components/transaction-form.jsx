@@ -80,17 +80,18 @@ const AddTransactionForm = ({
     data: transactionResult,
   } = useFetch(editMode ? updateTransaction : createTransaction);
 
-  const onSubmit = async (data) => {
-    const formData = {
-      ...data,
-      amount: parseFloat(data.amount),
-    };
-    if (editMode) {
-      transactionFn(editId, formData);
-    } else {
-      transactionFn(formData);
-    }
+ const onSubmit = async (data) => {
+  const formData = {
+    ...data,
+    amount: data.amount,
   };
+
+  if (editMode) {
+    transactionFn(editId, formData);
+  } else {
+    transactionFn(formData);
+  }
+};
 
   useEffect(() => {
     if (transactionResult?.success && !transactionLoading) {
