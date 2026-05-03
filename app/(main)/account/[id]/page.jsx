@@ -23,7 +23,7 @@ const AccountPage = async ({ params }) => {
 
       {/* HEADER */}
       <div>
-        <h1 className="text-5xl font-bold text-slate-800 dark:text-white">
+        <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4 md:mb-5 leading-tight">
           {name}
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
