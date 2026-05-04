@@ -1,6 +1,6 @@
 "use client";
 
-import { createTransaction } from "@/actions/transaction";
+import { createTransaction, updateTransaction } from "@/actions/transaction";
 import { transactionSchema } from "@/app/lib/schema";
 import { CalendarIcon, Loader2, TrendingDown, TrendingUp, Info } from "lucide-react";
 import { format } from "date-fns";
@@ -85,7 +85,7 @@ const AddTransactionForm = ({
     const onSubmit = async (data) => {
         const formData = {
             ...data,
-            amount: parseFloat(data.amount),
+            amount: Math.round(parseFloat(data.amount) * 100) / 100,
         };
 
         if (editMode) {
@@ -131,7 +131,7 @@ const AddTransactionForm = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-            <ReceiptScanner onScanComplete={handleScanComplete}/>
+            {!editMode && <ReceiptScanner onScanComplete={handleScanComplete}/>}
 
             {/*  S1: Basic Info */}
             <div className="rounded-2xl border border-slate-200 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/60 backdrop-blur-xl shadow-sm p-5">
