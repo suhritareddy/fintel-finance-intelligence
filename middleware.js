@@ -1,5 +1,6 @@
 import arcjet, { createMiddleware, detectBot, shield } from '@arcjet/next';
 import { clerkMiddleware , createRouteMatcher} from '@clerk/nextjs/server';
+export const runtime = "nodejs";
 const isProtectedRoute = createRouteMatcher([
   
   "/dashboard(.*)",
