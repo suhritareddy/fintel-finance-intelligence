@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 import { getDashboardData, getUserAccounts } from "@/actions/dashboard";
 import AccountCard from "./_components/account-card";
 import { getCurrentBudget } from "@/actions/budget";
-import {BudgetProgress} from "./_components/budget-progress";
+import { BudgetProgress } from "./_components/budget-progress";
 import { DashboardOverview } from "./_components/transaction-overview";
 
 
@@ -36,16 +36,16 @@ async function DashboardPage() {
         )}
 
         {/*overview */}
-<div className="mb-6">
-  <Suspense fallback={"Loading Overview..."}>
-    <div className="grid gap-4 ">
-      <DashboardOverview
-        accounts={accounts}
-        transactions={transactions || []}
-      />
-    </div>
-  </Suspense>
-</div>
+        <div className="mb-6">
+          <Suspense fallback={"Loading Overview..."}>
+            <div className="grid gap-4 ">
+              <DashboardOverview
+                accounts={accounts}
+                transactions={transactions || []}
+              />
+            </div>
+          </Suspense>
+        </div>
         <h2 className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-4">
           Your Accounts
         </h2>

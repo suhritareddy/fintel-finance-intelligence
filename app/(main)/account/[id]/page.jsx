@@ -45,9 +45,10 @@ const AccountPage = async ({ params }) => {
               Current Balance
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-1">
-              ₹{new Intl.NumberFormat("en-IN", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "INR",
+                maximumFractionDigits: 0,
               }).format(balance)}
             </h2>
           </div>

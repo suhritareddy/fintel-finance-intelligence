@@ -18,6 +18,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updateBudget } from "@/actions/budget";
 
+const formatINR = (value) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(value);
+
 export function BudgetProgress({ initialBudget, currentExpenses }) {
   const router = useRouter();
 
@@ -146,7 +153,7 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
                 <div className="flex items-end justify-between gap-4 flex-wrap">
                   <div>
                     <p className="text-2xl font-bold text-slate-900 dark:text-white">
-                      ₹{initialBudget.amount.toFixed(2)}
+                      {formatINR(initialBudget.amount)}
                     </p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
                       Total Monthly Budget
@@ -154,7 +161,7 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-semibold text-slate-800 dark:text-white">
-                      ₹{currentExpenses.toFixed(2)}
+                      {formatINR(currentExpenses)}
                     </p>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
                       Spent so far
@@ -172,8 +179,8 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
                     <span>{percentUsed.toFixed(1)}% used</span>
                     <span>
                       {currentExpenses > initialBudget.amount
-                        ? `₹${(currentExpenses - initialBudget.amount).toFixed(2)} over budget`
-                        : `₹${(initialBudget.amount - currentExpenses).toFixed(2)} left`}
+                        ? `${formatINR(currentExpenses - initialBudget.amount)} over budget`
+                        : `${formatINR(initialBudget.amount - currentExpenses)} left`}
                     </span>
                   </div>
                 </div>

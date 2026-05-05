@@ -5,9 +5,11 @@ import { revalidatePath } from "next/cache";
 
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
-  if (obj.balance) serialized.balance = obj.balance.toNumber();
-  if (obj.amount)  serialized.amount  = obj.amount.toNumber();
-  if (obj.date instanceof Date) serialized.date = obj.date.toISOString(); // ✅ FIX
+  if (obj.amount)
+    serialized.amount = Math.round(obj.amount.toNumber() * 100) / 100;
+  if (obj.balance)
+    serialized.balance = Math.round(obj.balance.toNumber() * 100) / 100;
+  if (obj.date instanceof Date) serialized.date = obj.date.toISOString(); 
   return serialized;
 };
 
@@ -107,7 +109,7 @@ export async function bulkDeleteTransactions(transactionIds) {
       });
 
       for (const [accountId, balanceChange] of Object.entries(
-        accountBalanceChanges
+        accountBalanceChanges,
       )) {
         await tx.account.update({
           where: { id: accountId },

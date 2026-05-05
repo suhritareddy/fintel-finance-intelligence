@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 const AccountCard = ({ account }) => {
   const { name, type, balance, id, isDefault } = account;
   const router = useRouter();
-  
+
   const {
     loading: updateDefaultLoading,
     fn: updatedefaultFn,
@@ -70,8 +70,7 @@ const AccountCard = ({ account }) => {
         <CardContent>
           <div className="text-2xl font-bold text-slate-900 dark:text-white">
             ₹{new Intl.NumberFormat("en-IN", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
+              maximumFractionDigits: 0,
             }).format(balance)}
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 pb-2">
@@ -91,7 +90,7 @@ const AccountCard = ({ account }) => {
         </CardFooter>
       </Link>
 
-     <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-emerald-200/20 to-transparent dark:from-slate-700/30" />
+      <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-emerald-200/20 to-transparent dark:from-slate-700/30" />
     </Card>
   );
 };
