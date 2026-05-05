@@ -10,7 +10,7 @@ const serializeTransaction = (obj)=>{
         serialized.balance=obj.balance.toNumber();
     }
     if(obj.amount){
-        serialized.amount=obj.balance.toNumber();
+        serialized.amount=obj.amount.toNumber();
     }
     return serialized;
 }
@@ -88,4 +88,24 @@ export async function getUserAccounts(){
 
     const serializedAccount = accounts.map(serializeTransaction);
     return serializedAccount;
+}
+
+export async function getDashboardData(){
+  const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    //get all user transactions
+    const transactions = await db.transaction.findMany({
+      where:{userId:user.id},
+      orderBy:{
+        date:"desc"
+      },
+    });
+    return transactions.map(serializeTransaction);
 }

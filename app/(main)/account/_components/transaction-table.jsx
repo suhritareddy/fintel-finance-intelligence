@@ -177,8 +177,8 @@ export default function TransactionTable({ transactions }) {
   useEffect(() => {
     if (deleted && !deleteLoading) {
       toast.success("Transactions deleted successfully");
-       setSelectedIds([]);
-        router.refresh();
+      setSelectedIds([]);
+      router.refresh();
     }
   }, [deleted, deleteLoading]);
 
@@ -402,8 +402,12 @@ export default function TransactionTable({ transactions }) {
                           : "text-emerald-500"
                       )}
                     >
-                      {transaction.type === "EXPENSE" ? "-" : "+"}₹
-                      {transaction.amount.toFixed(2)}
+                      {transaction.type === "EXPENSE" ? "-" : "+"}
+                      {new Intl.NumberFormat("en-IN", {
+                        style: "currency",
+                        currency: "INR",
+                        maximumFractionDigits:0,
+                      }).format(transaction.amount)}
                     </TableCell>
 
                     <TableCell>

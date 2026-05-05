@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const serializeAmount = (obj) => ({
   ...obj,
-  amount: obj.amount.toNumber(),
+  amount: Math.round(obj.amount.toNumber() * 100) / 100,
 });
 
 export async function createTransaction(data) {
@@ -46,6 +46,7 @@ export async function createTransaction(data) {
     if (data.amount <= 0) throw new Error("Amount must be positive");
 
     const balanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
+    const newBalance = account.balance.toNumber() + balanceChange;
 
     const transaction = await db.$transaction(async (tx) => {
       const newTransaction = await tx.transaction.create({
@@ -61,7 +62,7 @@ export async function createTransaction(data) {
 
       await tx.account.update({
         where: { id: data.accountId },
-        data: { balance: { increment: balanceChange } },
+        data: { balance: newBalance },
       });
 
       return newTransaction;
