@@ -110,20 +110,27 @@ const AddTransactionForm = ({
     const type = watch("type");
     const isRecurring = watch("isRecurring");
     const date = watch("date");
+    const amount = watch("amount");
+    const accountId = watch("accountId");
 
+    const selectedAccount = accounts.find((a) => a.id === accountId);
+    const isOverdraft =
+        type === "EXPENSE" &&
+        selectedAccount &&
+        parseFloat(amount) > selectedAccount.balance;
     const filteredCategories = categories.filter(
         (category) => category.type === type
     );
 
-    const handleScanComplete=(scannedData)=>{
-        if(scannedData){
-            setValue("amount",scannedData.amount.toString());
-            setValue("date",new Date(scannedData.date));
-            if(scannedData.description){
-                setValue("description",scannedData.description);
+    const handleScanComplete = (scannedData) => {
+        if (scannedData) {
+            setValue("amount", scannedData.amount.toString());
+            setValue("date", new Date(scannedData.date));
+            if (scannedData.description) {
+                setValue("description", scannedData.description);
             }
-            if(scannedData.category){
-                setValue("category",scannedData.category);
+            if (scannedData.category) {
+                setValue("category", scannedData.category);
             }
         }
     };
@@ -131,7 +138,7 @@ const AddTransactionForm = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-            {!editMode && <ReceiptScanner onScanComplete={handleScanComplete}/>}
+            {!editMode && <ReceiptScanner onScanComplete={handleScanComplete} />}
 
             {/*  S1: Basic Info */}
             <div className="rounded-2xl border border-slate-200 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/60 backdrop-blur-xl shadow-sm p-5">
@@ -203,6 +210,13 @@ const AddTransactionForm = ({
                         </div>
                         {errors.amount && (
                             <p className="text-sm text-red-500">{errors.amount.message}</p>
+                        )}
+
+                        
+                        {isOverdraft && !errors.amount && (
+                            <p className="text-sm text-red-500 flex items-center gap-1">
+                                ⚠ Exceeds account balance of ₹{selectedAccount.balance.toLocaleString("en-IN")}
+                            </p>
                         )}
                     </div>
 
@@ -398,7 +412,7 @@ const AddTransactionForm = ({
 
                 <Button
                     type="submit"
-                    disabled={transactionLoading}
+                    disabled={transactionLoading || isOverdraft}
                     className={cn(
                         "h-11 rounded-xl text-white font-semibold transition-all duration-200",
                         type === "INCOME"
