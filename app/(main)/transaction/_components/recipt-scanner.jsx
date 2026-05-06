@@ -25,17 +25,21 @@ const ReceiptScanner = ({ onScanComplete }) => {
   };
 
 
-useEffect(() => {
-  if (scannedData && !scanReceiptLoading) {
-    // AI returns empty object {} for non-receipts
-    if (!scannedData.amount && !scannedData.merchantName) {
-      toast.error("This doesn't look like a receipt. Please upload a valid receipt image.");
-      return;
+  useEffect(() => {
+    if (scannedData && !scanReceiptLoading) {
+      // AI returns empty object {} for non-receipts
+      if (
+        !scannedData.amount ||
+        isNaN(scannedData.amount) ||
+        scannedData.amount <= 0
+      ) {
+        toast.error("This doesn't look like a receipt. Please upload a valid receipt image.");
+        return;
+      }
+      onScanComplete(scannedData);
+      toast.success("Receipt scanned successfully");
     }
-    onScanComplete(scannedData);
-    toast.success("Receipt scanned successfully");
-  }
-}, [scannedData, scanReceiptLoading]);
+  }, [scannedData, scanReceiptLoading]);
 
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/60 backdrop-blur-xl shadow-sm p-5">

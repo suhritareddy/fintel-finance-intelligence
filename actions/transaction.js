@@ -45,12 +45,12 @@ export async function createTransaction(data) {
 
     if (data.amount <= 0) throw new Error("Amount must be positive");
 
-    const balanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
-    const newBalance = account.balance.toNumber() + balanceChange;
-
     if (data.type === "EXPENSE" && data.amount > account.balance.toNumber()) {
       throw new Error("Insufficient balance in this account");
     }
+
+    const balanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
+    const newBalance = account.balance.toNumber() + balanceChange;
 
     const transaction = await db.$transaction(async (tx) => {
       const newTransaction = await tx.transaction.create({
@@ -122,7 +122,8 @@ export async function scanReceipt(file) {
         "merchantName": "string",
         "category": "string"
       }
-      If its not a receipt, return an empty object {}
+      If it is not a receipt with a clear total amount, return an empty object {}.
+      A receipt MUST have a visible monetary total. If no amount is found, return {}.
     `;
 
     const response = await genAI.models.generateContent({
@@ -148,8 +149,8 @@ export async function scanReceipt(file) {
     try {
       const data = JSON.parse(cleanedText);
       if (!data || Object.keys(data).length === 0) {
-    return {};
-  }
+        return {};
+      }
       return {
         amount: parseFloat(data.amount),
         date: new Date(data.date),
