@@ -17,15 +17,21 @@ const ReceiptScanner = ({ onScanComplete }) => {
   } = useFetch(scanReceipt);
 
   const handleReceiptScan = async (file) => {
-    if(file.size>5*1024*1024){
+    if (file.size > 5 * 1024 * 1024) {
       toast.error("File size should be less than 5MB");
       return;
     }
     await scanReceiptFn(file);
   };
 
-  useEffect(() => {
+
+useEffect(() => {
   if (scannedData && !scanReceiptLoading) {
+    // AI returns empty object {} for non-receipts
+    if (!scannedData.amount && !scannedData.merchantName) {
+      toast.error("This doesn't look like a receipt. Please upload a valid receipt image.");
+      return;
+    }
     onScanComplete(scannedData);
     toast.success("Receipt scanned successfully");
   }
@@ -33,7 +39,7 @@ const ReceiptScanner = ({ onScanComplete }) => {
 
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/60 backdrop-blur-xl shadow-sm p-5">
-      
+
       {/* Header */}
       <div className="flex items-center gap-2 mb-5 pb-3 border-b border-slate-100 dark:border-slate-700/50">
         <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white bg-emerald-500">
@@ -45,13 +51,13 @@ const ReceiptScanner = ({ onScanComplete }) => {
         </span>
       </div>
 
-      
+
+
       <input
         type="file"
         ref={fileInputRef}
         className="hidden"
-        accept="image/*"
-        capture="environment"
+        accept="image/*,application/pdf"
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file) handleReceiptScan(file);

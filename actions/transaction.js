@@ -48,6 +48,10 @@ export async function createTransaction(data) {
     const balanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
     const newBalance = account.balance.toNumber() + balanceChange;
 
+    if (data.type === "EXPENSE" && data.amount > account.balance.toNumber()) {
+      throw new Error("Insufficient balance in this account");
+    }
+
     const transaction = await db.$transaction(async (tx) => {
       const newTransaction = await tx.transaction.create({
         data: {
@@ -75,8 +79,6 @@ export async function createTransaction(data) {
     throw new Error(error.message);
   }
 }
-
-
 
 function calculateNextRecurringDate(startDate, interval) {
   const date = new Date(startDate);
@@ -140,11 +142,14 @@ export async function scanReceipt(file) {
       ],
     });
 
-   const text = response.text;
+    const text = response.text;
     const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
 
     try {
       const data = JSON.parse(cleanedText);
+      if (!data || Object.keys(data).length === 0) {
+    return {};
+  }
       return {
         amount: parseFloat(data.amount),
         date: new Date(data.date),
@@ -162,27 +167,26 @@ export async function scanReceipt(file) {
   }
 }
 
-export async function getTransaction(id){
+export async function getTransaction(id) {
   const { userId } = await auth();
-    if (!userId) throw new Error("Unauthorized");
+  if (!userId) throw new Error("Unauthorized");
 
-    const user = await db.user.findUnique({
-      where: { clerkUserId: userId },
-    });
-    if (!user) throw new Error("User not found");
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+  if (!user) throw new Error("User not found");
 
-    const transaction = await db.transaction.findUnique({
-      where:{
-        id,
-        userId:user.id,
-      },
-    });
-    if (!transaction) throw new Error("Transaction not found");
-    return serializeAmount(transaction);
-
+  const transaction = await db.transaction.findUnique({
+    where: {
+      id,
+      userId: user.id,
+    },
+  });
+  if (!transaction) throw new Error("Transaction not found");
+  return serializeAmount(transaction);
 }
 
-export async function updateTransaction(id,data){
+export async function updateTransaction(id, data) {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
@@ -192,26 +196,30 @@ export async function updateTransaction(id,data){
     });
     if (!user) throw new Error("User not found");
 
-
-    const originalTransaction =await db.transaction.findUnique({
-      where:{
+    const originalTransaction = await db.transaction.findUnique({
+      where: {
         id,
-        userId:user.id,
-
+        userId: user.id,
       },
-      include:{
-        account:true,
+      include: {
+        account: true,
       },
     });
-    if(!originalTransaction) throw new Error("Transaction not found");
+    if (!originalTransaction) throw new Error("Transaction not found");
     //calculate balance changes
-    const oldBalanceChange=
-    originalTransaction.type === "EXPENSE"
-    ? -originalTransaction.amount.toNumber()
-    :originalTransaction.amount.toNumber();
+    const oldBalanceChange =
+      originalTransaction.type === "EXPENSE"
+        ? -originalTransaction.amount.toNumber()
+        : originalTransaction.amount.toNumber();
 
-    const newBalanceChange = data.type === "EXPENSE" ? -data.amount :data.amount;
-    const netBalanceChange= newBalanceChange-oldBalanceChange;
+    const newBalanceChange =
+      data.type === "EXPENSE" ? -data.amount : data.amount;
+    const netBalanceChange = newBalanceChange - oldBalanceChange;
+    const projectedBalance =
+      originalTransaction.account.balance.toNumber() + netBalanceChange;
+    if (projectedBalance < 0) {
+      throw new Error("Insufficient balance for this update");
+    }
 
     //update transaction & acc balance
     const transaction = await db.$transaction(async (tx) => {

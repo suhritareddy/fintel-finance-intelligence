@@ -10,7 +10,7 @@ const AddTransactionPage = async({searchParams}) => {
   const params = await searchParams;  
   const editId = params?.edit;
 
-  console.log(editId);
+  
 
   let initialData=null;
   if(editId){

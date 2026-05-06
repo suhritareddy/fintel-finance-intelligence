@@ -195,6 +195,7 @@ const AddTransactionForm = ({
                             <Input
                                 type="number"
                                 step="0.01"
+                                min="0.01"
                                 placeholder="0.00"
                                 {...register("amount")}
                                 className="pl-7 h-11 bg-white/70 dark:bg-slate-900/50 border-slate-300 dark:border-slate-700 focus-visible:ring-emerald-500"

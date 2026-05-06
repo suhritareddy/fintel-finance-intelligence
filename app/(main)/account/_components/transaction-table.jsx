@@ -406,7 +406,7 @@ export default function TransactionTable({ transactions }) {
                       {new Intl.NumberFormat("en-IN", {
                         style: "currency",
                         currency: "INR",
-                        maximumFractionDigits:0,
+                        maximumFractionDigits: 0,
                       }).format(transaction.amount)}
                     </TableCell>
 
@@ -467,7 +467,11 @@ export default function TransactionTable({ transactions }) {
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
                             className="text-red-500"
-                            onClick={() => deleteFn([transaction.id])}
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to delete this transaction?")) {
+                                deleteFn([transaction.id]);
+                              }
+                            }}
                           >
                             Delete
                           </DropdownMenuItem>

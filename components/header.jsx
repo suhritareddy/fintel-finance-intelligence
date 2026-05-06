@@ -9,7 +9,10 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const pathname = usePathname();
   const { isSignedIn, isLoaded } = useUser();
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem("theme") === "dark";
+});
 
   // Load theme
   useEffect(() => {
